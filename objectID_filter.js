@@ -56,23 +56,26 @@ async function fetchBatchWithImages(ids) {// Fetch a batch of objects and return
             if (filterHasPrimaryImageSmall(metadata)) {
                 validObjects.push({
                     objectID: metadata.objectID,
-                    title: metadata.title,
-                    culture: metadata.culture,
-                    image: metadata.primaryImageSmall,
 
-                    artistName: metadata.artistDisplayName,
-                    artistNationality: metadata.artistNationality,
-                    artistDateBegin: metadata.artistBeginDate,
-                    artistDateEnd: metadata.artistEndDate,
+                    // Comment out all the parameters below to reduce file size
 
-                    // Details about the object dates are provided below so you can use to make more precise filtering etc
-                    objectDateBegin: metadata.objectBeginDate,
-                    objectDateEnd: metadata.objectEndDate,
-
-                    objectMedium: metadata.medium,
-                    objectDepartment: metadata.objectDepartment, //Section/department the object belongs to
-
-                    objectURLMET: metadata.objectURL,
+                    // title: metadata.title,
+                    // culture: metadata.culture,
+                    // image: metadata.primaryImageSmall,
+                    //
+                    // artistName: metadata.artistDisplayName,
+                    // artistNationality: metadata.artistNationality,
+                    // artistDateBegin: metadata.artistBeginDate,
+                    // artistDateEnd: metadata.artistEndDate,
+                    //
+                    // // Details about the object dates are provided below so you can use to make more precise filtering etc
+                    // objectDateBegin: metadata.objectBeginDate,
+                    // objectDateEnd: metadata.objectEndDate,
+                    //
+                    // objectMedium: metadata.medium,
+                    // objectDepartment: metadata.objectDepartment, //Section/department the object belongs to
+                    //
+                    // objectURLMET: metadata.objectURL,
                     // objectURLWiki: metadata.objectWikidata_URL,
                 });
             }
