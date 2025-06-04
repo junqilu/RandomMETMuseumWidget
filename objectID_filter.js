@@ -54,30 +54,30 @@ async function fetchBatchWithImages(ids) {// Fetch a batch of objects and return
             const metadata = result.value;
 
             if (filterHasPrimaryImageSmall(metadata)) {
-                validObjects.push({
-                    objectID: metadata.objectID,
+                validObjects.push(metadata.objectID);
 
-                    // Comment out all the parameters below to reduce file size
 
-                    // title: metadata.title,
-                    // culture: metadata.culture,
-                    // image: metadata.primaryImageSmall,
-                    //
-                    // artistName: metadata.artistDisplayName,
-                    // artistNationality: metadata.artistNationality,
-                    // artistDateBegin: metadata.artistBeginDate,
-                    // artistDateEnd: metadata.artistEndDate,
-                    //
-                    // // Details about the object dates are provided below so you can use to make more precise filtering etc
-                    // objectDateBegin: metadata.objectBeginDate,
-                    // objectDateEnd: metadata.objectEndDate,
-                    //
-                    // objectMedium: metadata.medium,
-                    // objectDepartment: metadata.objectDepartment, //Section/department the object belongs to
-                    //
-                    // objectURLMET: metadata.objectURL,
-                    // objectURLWiki: metadata.objectWikidata_URL,
-                });
+                // Comment out all the parameters below to reduce file size. Since it only saves the objectID, saving it as a list can save more file space
+
+                // title: metadata.title,
+                // culture: metadata.culture,
+                // image: metadata.primaryImageSmall,
+                //
+                // artistName: metadata.artistDisplayName,
+                // artistNationality: metadata.artistNationality,
+                // artistDateBegin: metadata.artistBeginDate,
+                // artistDateEnd: metadata.artistEndDate,
+                //
+                // // Details about the object dates are provided below so you can use to make more precise filtering etc
+                // objectDateBegin: metadata.objectBeginDate,
+                // objectDateEnd: metadata.objectEndDate,
+                //
+                // objectMedium: metadata.medium,
+                // objectDepartment: metadata.objectDepartment, //Section/department the object belongs to
+                //
+                // objectURLMET: metadata.objectURL,
+                // objectURLWiki: metadata.objectWikidata_URL,
+
             }
         }
     }
