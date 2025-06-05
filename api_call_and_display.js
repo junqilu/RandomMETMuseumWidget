@@ -1,8 +1,4 @@
 // Basic functions
-function generate_random_number(max_number) {
-    return Math.floor(Math.random() * max_number) + 1;
-}
-
 function current_time_str() { //Create the time str for the current time in the format of "05/20/2025, 01:47:33 PM"
     let now = new Date();
 
@@ -75,7 +71,7 @@ function handle_api_error(e) { //Handle API calling errors
     alert_in_widget('Error', 'API call failed', e);
 }
 
-function waiting_widget_display(){
+function waiting_widget_display() {
     let widget = basic_widget_ini();
 
     let time_str = current_time_str();
@@ -91,23 +87,22 @@ function waiting_widget_display(){
     show_widget(widget);
 }
 
-async function obtain_max_object_count() {
-// Prepare request
-    let url = 'https://collectionapi.metmuseum.org/public/collection/v1/objects';
-    let req = new Request(url);
-    req.method = 'get';
+function pick_random_objectID_from_file(bookmark_name) {
+    const fm = FileManager.iCloud();
 
-// Load data
-    let response;
-    try {
-        response = await req.loadJSON();
-    } catch (e) {
-        handle_api_error(e);
-        return;
+    const bookmark_path = fm.bookmarkedPath(bookmark_name);
+
+    // Read and parse the file
+    const content = fm.readString(bookmark_path);
+    const list = JSON.parse(content);
+
+    // Validate and pick
+    if (!Array.isArray(list)) {
+        throw new Error("JSON content is not a list");
     }
 
-    let max_obj_count = response['total'];
-    return max_obj_count;
+    const randomIndex = Math.floor(Math.random() * list.length);
+    return list[randomIndex];
 }
 
 async function obtain_obj_info_worker(obj_id) {
@@ -130,20 +125,17 @@ async function obtain_obj_info_worker(obj_id) {
     return {obj_img, obj_title};
 }
 
-async function obtain_obj_info(){
+async function obtain_obj_info() {
     let random_obj_id;
     let obj_img;
     let obj_title;
 
-    do {
-        let max_obj_count = await obtain_max_object_count();
-        random_obj_id = generate_random_number(max_obj_count);
+    random_obj_id = pick_random_objectID_from_file("met_objectIDs_with_images");
 
-        const obj_info = await obtain_obj_info_worker(random_obj_id);
-        obj_img = obj_info.obj_img;
-        obj_title = obj_info.obj_title;
+    const obj_info = await obtain_obj_info_worker(random_obj_id);
 
-    } while (!obj_img || !obj_title); // Check if they're falsy: '', undefined, null
+    obj_img = obj_info.obj_img;
+    obj_title = obj_info.obj_title;
 
     console.log(random_obj_id);
     console.log(obj_img);
@@ -164,19 +156,18 @@ async function display_obj(obj_img, obj_title) {
     obj_title_component.textColor = Color.gray();
     obj_title_component.font = Font.mediumSystemFont(20);
 
-// Present the widget
+    // Present the widget
     show_widget(widget);
 }
 
 
-
 // Main code
-async function main(){
-    waiting_widget_display();
+async function main() {
+    // waiting_widget_display();
 
     let obj_info = await obtain_obj_info();
 
-    let widget = await display_obj(obj_info.obj_img, obj_info.obj_title);
+    display_obj(obj_info.obj_img, obj_info.obj_title);
 
     Script.complete();
 }

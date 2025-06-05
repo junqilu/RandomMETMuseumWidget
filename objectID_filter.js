@@ -32,7 +32,7 @@ function filterHasPrimaryImageSmall(metadata) { // Filter: has a small primary i
 }
 
 
-function saveToJSON(data, filename = 'output/met_objects_with_images.json') { // Save result to JSON
+function saveToJSON(data, filename = 'output/met_objectIDs_with_images.json') { // Save result to JSON
     fs.writeFileSync(filename, JSON.stringify(data, null, 2));
     // console.log(`💾 Saved ${data.length} entries to ${filename}`);
 }
